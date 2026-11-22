@@ -30,8 +30,6 @@ In our audit of the original OpenAqua water-treatment planner, the requirement c
 
 <!-- repository-coverage:start -->
 
-**11 of 15 repositories in this series have saved audit reports.** The remaining 4 are awaiting audit.
-
 Across the **11 audited repositories**, GNOTH Auditor indexed **1,613,498 source lines** and **50,925 functions** in **7,849 source files**. It counted **50,035 Python variable names** across the 8 repositories with indexed Python files.
 
 [Open the table in the README file view](README.md#audited-repositories)
