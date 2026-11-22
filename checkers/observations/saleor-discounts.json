@@ -1,0 +1,19 @@
+{
+  "case": "saleor-discounts",
+  "scenario": "case-page",
+  "observation": {
+    "one_dollar": {
+      "merchandise": 50,
+      "shipping": 50
+    },
+    "one_dollar_one_cent": {
+      "merchandise": 51,
+      "shipping": 51
+    },
+    "zero_shipping": {
+      "merchandise": 101,
+      "shipping": 0
+    },
+    "direct_net_cents": 1899
+  }
+}

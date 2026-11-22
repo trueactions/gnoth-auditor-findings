@@ -1,0 +1,10 @@
+{
+  "case": "investment-research",
+  "scenario": "case-page",
+  "observation": {
+    "hold_with_buy_quote": "Hold",
+    "no_rating": "REVIEW",
+    "review_with_buy_quote": "Buy",
+    "review_report_header": "Buy"
+  }
+}

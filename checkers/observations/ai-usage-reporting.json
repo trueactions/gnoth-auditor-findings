@@ -1,0 +1,14 @@
+{
+  "case": "ai-usage-reporting",
+  "scenario": "case-page",
+  "observation": {
+    "engine_counters": [
+      4150,
+      8300
+    ],
+    "single_record_total": 12450,
+    "forward_total": 8300,
+    "reverse_total": 4150,
+    "fresh_reverse_total": 4150
+  }
+}

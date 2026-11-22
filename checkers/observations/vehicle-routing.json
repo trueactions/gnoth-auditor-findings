@@ -1,0 +1,21 @@
+{
+  "case": "vehicle-routing",
+  "scenario": "case-page",
+  "observation": {
+    "positive_distances": {
+      "assigned_jobs": 0,
+      "unassigned_jobs": 2
+    },
+    "no_distances": {
+      "outcome": "plan",
+      "assigned_jobs": 2
+    },
+    "unconstrained_jobs": 2,
+    "time_limited": {
+      "outcome": "plan",
+      "assigned_jobs": 2,
+      "supplied_route_seconds": 5461,
+      "reported_route_seconds": 1802
+    }
+  }
+}

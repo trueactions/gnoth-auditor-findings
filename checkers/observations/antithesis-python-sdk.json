@@ -1,0 +1,66 @@
+{
+  "case": "antithesis-python-sdk",
+  "scenario": "case-page",
+  "observation": {
+    "catalog_ids": [
+      "check-1",
+      "check-2",
+      "check-3",
+      "check-4",
+      "check-5"
+    ],
+    "file": {
+      "listed_count": 5,
+      "emitted_ids": [
+        "check-1",
+        "check-2",
+        "check-3",
+        "check-4",
+        "check-5"
+      ],
+      "exit_status": 0
+    },
+    "direct": {
+      "listed_count": 5,
+      "emitted_ids": [],
+      "exit_status": 0
+    },
+    "parent": {
+      "listed_count": 5,
+      "emitted_ids": [
+        "check-1",
+        "check-2",
+        "check-3",
+        "check-4",
+        "check-5"
+      ],
+      "exit_status": 0
+    },
+    "ordinary_import": {
+      "runtime_ids": [
+        "check-1",
+        "check-2",
+        "check-3",
+        "check-4",
+        "check-5"
+      ],
+      "scanned_ids": [
+        "check-1",
+        "check-2",
+        "check-3",
+        "check-4",
+        "check-5"
+      ]
+    },
+    "alternate_import": {
+      "runtime_ids": [
+        "check-1",
+        "check-2",
+        "check-3",
+        "check-4",
+        "check-5"
+      ],
+      "scanned_ids": []
+    }
+  }
+}

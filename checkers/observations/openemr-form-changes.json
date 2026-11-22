@@ -1,0 +1,18 @@
+{
+  "case": "openemr-form-changes",
+  "scenario": "case-page",
+  "observation": {
+    "optional_edit": {
+      "before": "selection-A",
+      "after": "selection-B",
+      "dirty": false,
+      "prompts": 0,
+      "exit_selected": true
+    },
+    "direct_handler_control": {
+      "dirty": true,
+      "prompts": 1,
+      "exit_selected": false
+    }
+  }
+}
