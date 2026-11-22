@@ -1,22 +1,39 @@
-# The log showed two successes and the test recorded one submission
+# A social-media simulation logged two successes and submitted one action
 
-A test supplied two posts from the same simulated account. Both were logged as successful. The test recorder captured one submission.
+MiroFish lets a user set up simulations in which artificial accounts interact. The simulation can start with a list of initial events, such as two posts assigned to one simulated account. Those starting events shape what the rest of the simulated accounts encounter. A researcher or analyst needs the actions submitted to the simulator and the count in the activity log to agree. [Upstream MiroFish project](https://github.com/666ghj/MiroFish).
 
-## What should have happened
+We used **GNOTH Auditor**, Trueactions AI’s product for checking whether software delivers the results people rely on, to compare the initial events the application recorded with the actions it handed off. [How an outcome audit works](README.md#what-an-outcome-audit-checks).
 
-If two distinct actions are logged as successful, the activity count should reflect two distinct submissions. Logs should describe the actions that were actually passed on.
+## Following two posts through the software
 
-## What Auditor observed
+Auditor supplied **two distinct posts for the same simulated account** and ran the existing code that prepares and submits those starting actions. A test recorder stood in for the simulator and captured the actions it received. The log printed two successful post messages. The recorder captured one submission containing the second post.
 
-The test supplied two different posts under one simulated account. The program kept its pending actions by account. The second action replaced the first pending action before submission, although each produced a success entry. A test recorder at the point of submission captured one action. The two success entries remained in the log.
+| Point in the workflow | Count |
+| --- | ---: |
+| Distinct starting posts specified in the test | 2 |
+| Successful post entries in the application log | 2 |
+| Actions captured at the handoff to the simulator | 1 |
 
-## Why it matters
+## What Auditor verified
 
-A report or analysis that relies on the success entries could overstate the amount of activity the simulator received.
+The program reserved one pending slot per account. The second post replaced the first before the handoff, even though both produced success messages. Comparing the log with the captured submission revealed the missing post.
 
-## What was tested
+An analyst counting logged activity could overstate what the simulator was asked to process. The audit measured the preparation and handoff code with a recorder. The simulation engine’s subsequent behavior and any live social platform activity were outside the check.
 
-The saved check exercised the code that prepares and submits the initial actions using a test recorder in place of the simulator. It covered the actions passed on and the logs printed alongside them. The audit was run on November 10, 2026 using GNOTH Auditor 2.1.3.
+## Audit record
+
+The saved check ran on November 10, 2026, using GNOTH Auditor 2.1.3 and captured the call arguments at the simulator boundary.
 
 - Audited copy SHA-256 `f32beb9a0485a5a189ec373c3ed6305517f5a2fbeff099b63b26532c23fe0cce`
-- [Upstream MiroFish project](https://github.com/666ghj/MiroFish)
+
+## Check the recorded result
+
+Read the [Python checker](checkers/cases/social_media_simulation.py) to see which rule it tests. The [recorded observation](checkers/observations/social-media-simulation.json) contains the measurements from this audit.
+
+From the top folder of this repository, run the checker with Python 3.8 or later. It reads the saved measurements and runs offline.
+
+```sh
+python3 checkers/check.py social-media-simulation checkers/observations/social-media-simulation.json
+```
+
+The expected last line is `FAIL` (exit code 1). The control checks pass, and the checker identifies where the measured outcome broke the rule. Checking a different version of the project requires measurements from that version.

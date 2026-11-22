@@ -1,0 +1,8 @@
+{
+  "case": "saleor-discounts",
+  "scenario": "one-cent-recheck",
+  "observation": {
+    "two_cent_control_total": 2,
+    "one_cent_split_total": 2
+  }
+}

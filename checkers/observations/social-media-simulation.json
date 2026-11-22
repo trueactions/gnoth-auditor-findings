@@ -1,0 +1,25 @@
+{
+  "case": "social-media-simulation",
+  "scenario": "case-page",
+  "observation": {
+    "single_post": {
+      "planned": [
+        "post-1"
+      ],
+      "logged_successes": 1,
+      "submitted": [
+        "post-1"
+      ]
+    },
+    "same_account_pair": {
+      "planned": [
+        "post-1",
+        "post-2"
+      ],
+      "logged_successes": 2,
+      "submitted": [
+        "post-2"
+      ]
+    }
+  }
+}

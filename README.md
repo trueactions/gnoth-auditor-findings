@@ -1,16 +1,63 @@
-# GNOTH Auditor findings
+# AI outcome reliability
 
-What happened when Trueactions AI used GNOTH Auditor to check whether software delivered the result its rules or inputs called for.
+**AI outcome reliability** is the extent to which software delivers the business result its users intended, under the conditions and constraints they set. Whether AI writes the code or helps make a decision, the team using the software still owns the outcome. To judge whether people can rely on it, that team needs to make the requirement explicit and compare it with what the application actually did.
 
-| Case | What Auditor found |
-| --- | --- |
-| [Water-treatment research](water-treatment-research.md) | An adapted screening tool passed 114 tests and shortlisted a treatment that its own source said did not effectively remove the target contaminant. |
-| [AI usage reporting](ai-usage-reporting.md) | Two records totaling 12,450 tokens produced totals of 8,300 or 4,150 depending on their order. |
-| [Investment research](investment-research.md) | One report showed **Buy** for a decision that said **Review**. |
-| [Scientific simulation](scientific-simulation.md) | A request for 20 seconds of data returned an earlier 8-second result. |
-| [Background jobs](background-jobs.md) | A task stopped with an error and returned a success status. |
-| [Social-media simulation](social-media-simulation.md) | Two posts were logged as successful. The test recorder captured one submission. |
+**Trueactions AI** brings founder Radhakrishnan Poomari’s more than twenty years of engineering, research and business experience to that question. He developed a deep-learning solution that GE deployed across its turbine fleet through Predix and led technology due diligence for GE’s acquisition of SmartSignal. He began building Auditor after seeing coding agents extend his software while some of the business rules it was built to preserve quietly stopped holding. [Founder’s background](https://trueactions.ai/advisory).
 
-Each page gives the expected result, the observed result, the test scope, and an identifier for the software copy tested. The upstream project links give context for those snapshots. The observations apply to the checks described in the case.
+**GNOTH Auditor** is Trueactions AI’s product for independently checking those outcomes. It uses expert knowledge of how systems fail to guide an investigation of an application’s code, data and business context. Each case report in this repository shows what someone needed to rely on, what the software produced, how Auditor traced the discrepancy and what evidence an engineer could use to check a correction.
 
-[Trueactions AI Advisory](https://trueactions.ai/advisory)
+## What code review can tell you
+
+A good reviewer asks whether a change does what its author intended, how it fits the rest of the system and which cases its tests cover. A reviewer can follow a user setting through the code, spot that another component ignores it and request a test. Review can uncover business-logic errors. An approval by itself cannot establish that every business rule held in the running application. The requirement tells the reviewer what should happen. Evidence from a run shows what happened under the conditions tested. [Google’s code review guide](https://google.github.io/eng-practices/review/reviewer/looking-for.html).
+
+### Where review and testing stand in November 2026
+
+Qodo’s review agents use business requirements and context from related repositories. Greptile’s TREX can run changed code in a sandbox and attach logs or traces to its review. A team can use those capabilities to investigate a business rule during review. [Qodo](https://www.qodo.ai/ai-code-review-platform/) · [Greptile TREX](https://www.greptile.com/blog/trex).
+
+Teams can also use Antithesis to explore executions that might violate a specified rule, or LangSmith to evaluate an AI application’s outputs against chosen criteria. The choice of criterion matters. “Did the workflow finish?” and “Did the result honor the user’s restriction?” give different answers for the very same run. [Antithesis](https://antithesis.com/docs/product/writing_tests/assertions/) · [LangSmith](https://docs.langchain.com/langsmith/evaluation-types).
+
+## What an outcome audit checks
+
+GNOTH Auditor can take a whole application as it stands and work backward from a result someone acts on, even when there is no pending code change. What distinguishes its **neuro-symbolic** approach is how it connects three steps in one investigation.
+
+1. **Find the rule the result depends on.** AI proposes candidate business rules from the application’s code and documentation. A user instruction, a documented requirement or a domain expert can settle what a correct result means.
+2. **Put that rule to a test.** Explicit rules and expert knowledge of recurring failures guide the choice of what to challenge. Where the software can be exercised, a deterministic check compares its output with the expectation using the same pass/fail rule each time.
+3. **Explain where the result went wrong.** Auditor follows the discrepancy back through the code and records which parts of the workflow ran, so someone else can examine the evidence or turn the finding into a regression test.
+
+In our audit of the original OpenAqua water-treatment planner, the requirement came directly from the request. If chemical dosing was prohibited, the planner should offer a compatible option or say it found none. Auditor ran the same arsenic example with dosing allowed, prohibited and unspecified. All three responses were identical. OpenAqua preserved the setting when it read the request, but its offline planner and its own **PASS** check both ignored it. That gives an engineer a specific place to fix and a test to keep. The finding concerns the software’s recommendation. Establishing whether a treatment works in a plant requires separate evidence.
+
+## Audited repositories
+
+<!-- repository-coverage:start -->
+
+**11 of 15 repositories in this series have saved audit reports.** The remaining 4 are awaiting audit.
+
+Across the **11 audited repositories**, GNOTH Auditor indexed **1,613,498 source lines** and **50,925 functions** in **7,849 source files**. It counted **50,035 Python variable names** across the 8 repositories with indexed Python files.
+
+[Open the table in the README file view](README.md#audited-repositories)
+
+| Repository audit | What the project does | GitHub stars / forks | Project files | Source files | Source lines | Functions | No. of variables | Languages |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| [VROOM](vehicle-routing.md) (C++) | Plans vehicle routes and assigns jobs to a fleet within scheduling and travel constraints. | [1,924 / 452](https://github.com/VROOM-Project/vroom "GitHub on 2026-11-21") | 208 | 183 | 27,247 | 832 | Not measured | C++, Shell |
+| [AITRA Meter](ai-usage-reporting.md) (Go) | Measures the GPU energy that AI workloads on Kubernetes use per output token. | [138 / 73](https://github.com/aitra-ai/aitra-meter "GitHub on 2026-11-21") | 190 | 74 | 11,034 | 505 | Not measured | Go, TypeScript, JavaScript, Shell |
+| [TradingAgents](investment-research.md) (Python) | Uses a team of AI agents to analyze market information and produce an investment research report. | [123,397 / 23,636](https://github.com/TauricResearch/TradingAgents "GitHub on 2026-11-21") | 213 | 94 | 13,587 | 473 | 2,064 | Python |
+| [RD-Agent](background-jobs.md) (Python) | Automates research and development tasks such as proposing experiments, implementing ideas and evaluating results. | [15,445 / 2,061](https://github.com/microsoft/RD-Agent "GitHub on 2026-11-21") | 920 | 556 | 66,735 | 2,744 | 10,835 | Python, Shell, TypeScript, JavaScript |
+| [OpenAqua](water-treatment-research.md) (Python) | Helps water-treatment researchers choose a sequence of treatment steps for a particular water source and its contaminants. | [3 / 0](https://github.com/zhaorui-bi/OpenAqua "GitHub on 2026-11-21") | 1,032 | 42 | 5,411 | 148 | 916 | Python |
+| [MiroFish](social-media-simulation.md) (Python) | Simulates how virtual accounts post, respond and interact in a social network. | [86,190 / 13,048](https://github.com/666ghj/MiroFish "GitHub on 2026-11-21") | 128 | 51 | 26,578 | 690 | 2,635 | Python, JavaScript |
+| [ion-exchange-neural-mass](scientific-simulation.md) (Python) | Simulates the activity of groups of neurons and reproduces figures from a published neuroscience study. | [3 / 1](https://github.com/grabuffo/ion-exchange-neural-mass "GitHub on 2026-11-21") | 62 | 17 | 1,503 | 43 | 465 | Python, Shell |
+| [Antithesis Python SDK](antithesis-python-sdk.md) (Python) | Lets developers declare properties of a Python application and report which checks ran during testing. | [19 / 1](https://github.com/antithesishq/antithesis-sdk-python "GitHub on 2026-11-21") | 49 | 18 | 3,307 | 167 | 397 | Python |
+| [Antithesis Bombadil](bombadil.md) (Rust) | Exercises browser interfaces using actions and checks defined by test authors. | [2,997 / 110](https://github.com/antithesishq/bombadil "GitHub on 2026-11-21") | 454 | 182 | 50,595 | 1,878 | 163 | Rust, TypeScript, Python, Lua, JavaScript, C |
+| [Saleor](saleor-discounts.md) (Python) | Runs online commerce workflows including checkout, orders, discounts and tax integrations. | [23,593 / 6,217](https://github.com/saleor/saleor "GitHub on 2026-11-21") | 4,731 | 2,632 | 264,896 | 7,820 | 32,560 | Python, Shell |
+| [OpenEMR](openemr-form-changes.md) (PHP) | Manages electronic health records and provides forms for recording questionnaire responses. | [5,615 / 3,137](https://github.com/openemr/openemr "GitHub on 2026-11-21") | 10,532 | 4,000 | 1,142,605 | 35,625 | Not measured | PHP, JavaScript, Shell, Perl |
+
+Repository names open the case reports. Stars and forks link to the upstream projects. GitHub figures were recorded on November 21, 2026.
+
+Project files include code, documentation and data in the audit inventory. Source lines include comments and blank lines. Functions are those the parsers recognized. Languages are those represented in the indexed source files. Each repository contributes one snapshot to these totals. The linked case describes the behavior exercised in that snapshot.
+
+Auditor counts names assigned, deleted or used as function parameters in Python files. A distinct name counts once per file, so a name in two files counts twice. “Not measured” means the index contained no Python files.
+
+OpenEMR reached the 4,000-file index limit in a snapshot with 10,532 project files.
+
+<!-- repository-coverage:end -->
+
+To use these cases in your own work, pick one result people act on and write down what would make it wrong. For a usage total, reverse the same two records and check that both totals still equal their sum. For a completed action, compare the success log with what the receiving system recorded. Each case links to the upstream project and identifies the software copy and the part of the workflow checked.

@@ -1,0 +1,46 @@
+{
+  "case": "water-treatment-research",
+  "scenario": "case-page",
+  "observation": {
+    "recommendations": {
+      "allowed": [
+        {
+          "status": "PASS",
+          "requires_dosing": true
+        }
+      ],
+      "prohibited": [
+        {
+          "status": "PASS",
+          "requires_dosing": true
+        }
+      ],
+      "unspecified": [
+        {
+          "status": "PASS",
+          "requires_dosing": true
+        }
+      ]
+    },
+    "coverage": {
+      "percent": 100,
+      "credited_option_ids": [
+        "reference-A",
+        "reference-B",
+        "other-1",
+        "other-2",
+        "other-3"
+      ]
+    },
+    "index": {
+      "submitted_id": "case-A",
+      "acknowledged_records": 1,
+      "control_parsed_ids": [
+        "case-A"
+      ],
+      "records_before": 929,
+      "records_after": 929,
+      "present_after_rebuild": false
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "case": "background-jobs",
+  "scenario": "case-page",
+  "observation": {
+    "handler": {
+      "error": "ModuleNotFoundError",
+      "exit_status": 0,
+      "reader_status": 0
+    },
+    "comparison": {
+      "error": "ModuleNotFoundError",
+      "exit_status": 1
+    }
+  }
+}

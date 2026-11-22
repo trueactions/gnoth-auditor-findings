@@ -1,0 +1,11 @@
+{
+  "case": "scientific-simulation",
+  "scenario": "case-page",
+  "observation": {
+    "quick_request_ms": 8000,
+    "full_request_ms": 20000,
+    "quick_end_ms": 8000,
+    "bypass_end_ms": 20000,
+    "reuse_end_ms": 8000
+  }
+}

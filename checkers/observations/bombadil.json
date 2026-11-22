@@ -1,0 +1,32 @@
+{
+  "case": "bombadil",
+  "scenario": "case-page",
+  "observation": {
+    "public_interface": {
+      "ordinary_first": "accepted",
+      "ordinary_repeat": "duplicate",
+      "first_time": {
+        "name-01": "duplicate",
+        "name-02": "duplicate",
+        "name-03": "duplicate"
+      }
+    },
+    "component": {
+      "ordinary_first": "accepted",
+      "first_time": {
+        "name-01": "duplicate",
+        "name-04": "duplicate",
+        "name-05": "duplicate",
+        "name-06": "duplicate",
+        "name-07": "duplicate",
+        "name-08": "duplicate",
+        "name-09": "duplicate",
+        "name-10": "duplicate",
+        "name-02": "duplicate",
+        "name-11": "duplicate",
+        "name-03": "duplicate",
+        "name-12": "duplicate"
+      }
+    }
+  }
+}

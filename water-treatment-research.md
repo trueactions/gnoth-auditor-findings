@@ -1,23 +1,40 @@
-# A screening tool shortlisted a treatment its own source rejected
+# OpenAqua recommended chemical dosing after the request ruled it out
 
-The version we adapted passed all 114 supplied tests. Its screening step still shortlisted a treatment that the cited source said did not effectively remove the target contaminant.
+OpenAqua helps water-treatment researchers explore which sequences of treatment steps might work for a given water source. A researcher can specify the contaminants, the treatment goals and constraints on what the design can use. Those constraints determine which options are worth investigating. For example, a request that prohibits chemical dosing should yield a compatible option or make clear that none was found. [OpenAqua project](https://github.com/zhaorui-bi/OpenAqua).
 
-## What should have happened
+We used **GNOTH Auditor**, Trueactions AI’s product for checking whether software delivers the results people rely on, to audit the original OpenAqua. The supplied offline demo ran successfully and produced a report. The audit then checked whether the recommendations respected the stated constraints and the evidence available to the software. [How an outcome audit works](README.md#what-an-outcome-audit-checks).
 
-The software was supposed to exclude treatments when the cited source showed they did not work for the contaminant being screened. A treatment could be considered only if its source supported the intended result.
+## One request, three settings
 
-## What Auditor observed
+Auditor ran the same example for arsenic three times. The only change was whether the request allowed chemical dosing, prohibited it or left the setting unspecified. OpenAqua returned the same response each time. The proposed sequence included steps labeled **Chemical Treatment** and **Chlorine**. Its constraint check returned **PASS** in all three cases.
 
-In the check, the software ranked one such treatment second among three shortlisted options. The source described no reduction in the concentration of the contaminant. The screening step missed that wording and treated the option as eligible. The finding compares the recommendation with the source it relied on.
+| Dosing setting | What OpenAqua returned |
+| --- | --- |
+| Allowed | Sequence including Chemical Treatment and Chlorine, marked **PASS**. |
+| Prohibited | The same sequence, marked **PASS**. |
+| Unspecified | The same sequence, marked **PASS**. |
 
-## Why it matters
+Auditor traced the setting through the code. OpenAqua kept it when it read the request. The offline planner and its constraint checker proceeded without applying it. The **PASS** label could lead a reviewer to believe the stated restriction had been checked.
 
-A reviewer could carry an unsupported option into the next review while believing the screening requirement had been satisfied. Passing the supplied tests answered a different question from checking whether that specific source and recommendation agreed.
+## Two other checks from the same audit
 
-## What was tested
+- **Full coverage for ineffective options.** For 1,4-dioxane, the program awarded full coverage to a sequence that included steps its own references described as ineffective or unsuitable for full-scale use. Auditor traced this to the software treating a match in its filenames as evidence that the method would remove the contaminant.
+- **A saved case never reached search.** OpenAqua acknowledged one new case. Auditor checked the searchable index after its rebuild finished. It still contained the same 929 records, and the new case was missing. The rebuild read a different source from the place where the application saved the case.
 
-We tested the founder-adapted OpenAqua2 version through the screening code in a controlled diagnostic. This check covered how the software interpreted its source and produced a shortlist. The saved run was on November 17, 2026 using GNOTH Auditor 2.1.3.
+## Audit record
 
-- Adapted version commit `49e2813a8c6d3244a0b4930a9ff875466ab53793`
-- Audited copy SHA-256 `65186d315fcf2ab8a2d7769261c1d4ae693eda93e2ca3dea0a6e9b110e6ec31b`
-- [Upstream OpenAqua project](https://github.com/zhaorui-bi/OpenAqua)
+The saved audit ran on November 18, 2026, using GNOTH Auditor 2.1.3. It covered the original OpenAqua source and the reference data available in the audited snapshot. The offline demo ran as shipped. The controlled dosing comparison exercised the existing recommendation code through a temporary loader on a disposable copy. Hosted-model behavior, plant performance and drinking-water compliance were outside these checks.
+
+- Audited copy SHA-256 `5a6a3901eb0a611b2ebc0eaba06dda761c7d445195f34b0fe6f4e1567e09579a`
+
+## Check the recorded result
+
+Read the [Python checker](checkers/cases/water_treatment_research.py) to see which rule it tests. The [recorded observation](checkers/observations/water-treatment-research.json) contains the measurements from this audit.
+
+From the top folder of this repository, run the checker with Python 3.8 or later. It reads the saved measurements and runs offline.
+
+```sh
+python3 checkers/check.py water-treatment-research checkers/observations/water-treatment-research.json
+```
+
+The expected last line is `FAIL` (exit code 1). The control checks pass, and the checker identifies where the measured outcome broke the rule. Checking a different version of the project requires measurements from that version.
