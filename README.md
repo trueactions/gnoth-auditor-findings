@@ -30,7 +30,7 @@ In our audit of the original OpenAqua water-treatment planner, the requirement c
 
 <!-- repository-coverage:start -->
 
-Across the **11 audited repositories**, GNOTH Auditor indexed **1,613,498 source lines** and **50,925 functions** in **7,849 source files**. It counted **50,035 Python variable names** across the 8 repositories with indexed Python files.
+Audit reports are recorded for all **15 repositories**. Across the audited snapshots, GNOTH Auditor indexed **2,859,389 source lines** and **113,420 functions** in **17,662 source files**. It counted **55,642 Python variable names** across the 10 repositories with indexed Python files.
 
 [Open the table in the README file view](README.md#audited-repositories)
 
@@ -47,14 +47,20 @@ Across the **11 audited repositories**, GNOTH Auditor indexed **1,613,498 source
 | [Antithesis Bombadil](bombadil.md) (Rust) | Exercises browser interfaces using actions and checks defined by test authors. | [2,997 / 110](https://github.com/antithesishq/bombadil "GitHub on 2026-11-21") | 454 | 182 | 50,595 | 1,878 | 163 | Rust, TypeScript, Python, Lua, JavaScript, C |
 | [Saleor](saleor-discounts.md) (Python) | Runs online commerce workflows including checkout, orders, discounts and tax integrations. | [23,593 / 6,217](https://github.com/saleor/saleor "GitHub on 2026-11-21") | 4,731 | 2,632 | 264,896 | 7,820 | 32,560 | Python, Shell |
 | [OpenEMR](openemr-form-changes.md) (PHP) | Manages electronic health records and provides forms for recording questionnaire responses. | [5,615 / 3,137](https://github.com/openemr/openemr "GitHub on 2026-11-21") | 10,532 | 4,000 | 1,142,605 | 35,625 | Not measured | PHP, JavaScript, Shell, Perl |
+| [frePPLe](https://github.com/frePPLe/frepple/tree/fdecacb2d5c169121e749c0120536ea556c8dcc4) (Python / C++) | Plans supply and production around demand, inventory and capacity. | [785 / 343](https://github.com/frePPLe/frepple "GitHub on 2026-11-25") | 2,209 | 584 | 282,572 | 6,084 | 5,524 | Python, C++, JavaScript, Shell |
+| [Kimai](https://github.com/kimai/kimai/tree/382c618f89ffd8add341ab882e1221fa02ce6fcb) (PHP) | Tracks time and expenses and generates invoices for customer projects. | [5,181 / 896](https://github.com/kimai/kimai "GitHub on 2026-11-25") | 2,959 | 1,229 | 109,332 | 6,246 | Not measured | PHP, JavaScript, Shell |
+| [Decidim](https://github.com/decidim/decidim/tree/58d3cd2919d37a0a09f216b253f4662453eb1c26) (Ruby) | Supports public participation through proposals, assemblies, elections and budgets. | [1,859 / 498](https://github.com/decidim/decidim "GitHub on 2026-11-25") | 11,772 | 4,000 | 268,987 | 13,238 | Not measured | Ruby, JavaScript |
+| [OpenCondo](https://github.com/open-condo-software/condo/tree/a9358a545377764b445c6e0c68fb517567c27c8d) (JavaScript / TypeScript) | Supports property management, resident requests, billing and service workflows. | [436 / 164](https://github.com/open-condo-software/condo "GitHub on 2026-11-25") | 6,252 | 4,000 | 585,000 | 36,927 | 83 | Python, JavaScript, TypeScript, Shell |
 
-Repository names open the case reports. Stars and forks link to the upstream projects. GitHub figures were recorded on November 21, 2026.
+Repository names open the published case reports where available and the audited source revisions for the other saved reports. Star and fork counts link to the upstream projects and are dated in each row.
 
-Project files include code, documentation and data in the audit inventory. Source lines include comments and blank lines. Functions are those the parsers recognized. Languages are those represented in the indexed source files. Each repository contributes one snapshot to these totals. The linked case describes the behavior exercised in that snapshot.
+Project files include code, documentation and data in the audit inventory. Source lines include comments and blank lines. Functions are those the parsers recognized. Languages are those represented in the indexed source files. Each repository contributes one snapshot to these totals. Each published case describes the behavior exercised in its snapshot.
 
 Auditor counts names assigned, deleted or used as function parameters in Python files. A distinct name counts once per file, so a name in two files counts twice. “Not measured” means the index contained no Python files.
 
-OpenEMR reached the 4,000-file index limit in a snapshot with 10,532 project files.
+OpenEMR, Decidim and OpenCondo reached the 4,000-file source index limit. Their indexed counts cover part of each saved snapshot.
+
+The latest OpenCondo audit confirmed a test-fixture false failure. Startup and service smoke checks passed in the prepared environment. End-to-end property management, payment and integration workflows remain unverified.
 
 <!-- repository-coverage:end -->
 
